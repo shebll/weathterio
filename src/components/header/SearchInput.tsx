@@ -86,7 +86,7 @@ export default function SearchInput() {
     }
   };
   return (
-    <div className="relative flex items-center gap-1">
+    <div className="relative flex items-center gap-1 ">
       <div className="rounded-md bg-gray-100 outline-[0.5px] outline-gray-200 py-2 px-4 flex gap-2 items-center">
         <img
           src="/search-light.png"
@@ -105,8 +105,8 @@ export default function SearchInput() {
           className="bg-transparent outline-none"
         />
       </div>
-      <div className="relative inline-block group">
-        <button onClick={getCurrentLocation} className="relative z-10">
+      <div className="relative inline-block group shrink-0">
+        <button onClick={getCurrentLocation} className="z-10">
           <img
             src="/location-light.png"
             alt="location png"
@@ -115,17 +115,8 @@ export default function SearchInput() {
             className="p-2 bg-gray-200 rounded-full"
           />
         </button>
-        <div className="absolute right-[-200%] bottom-[140%]  transition-all ease-in-out duration-300 group-hover:bottom-full mb-2 opacity-0 group-hover:opacity-100 bg-black/85 text-white text-sm rounded-md px-2 py-1 w-max">
+        <div className="absolute right-[-30%] bottom-[140%]  transition-all ease-in-out duration-300 group-hover:bottom-full mb-2 opacity-0 group-hover:opacity-100 bg-black/85 text-white text-sm rounded-md px-2 py-1 w-max">
           Use Current Location
-          <svg
-            className="absolute left-0 w-full h-2 text-gray-900 top-full"
-            x="0px"
-            y="0px"
-            viewBox="0 0 255 255"
-            xmlSpace="preserve"
-          >
-            <polygon className="fill-current" points="0,0 127.5,127.5 255,0" />
-          </svg>
         </div>
       </div>
       {showPopup && (
