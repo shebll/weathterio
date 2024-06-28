@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/shebll/weathterio/compare/v0.0.1...v0.0.2) (2024-06-28)
+
+
+### Features
+
+* **weather:** Update weather widget ([b1924de](https://github.com/shebll/weathterio/commit/b1924de2fd6be16f6c5b2e2eadf4fed28c6e0f93))
+
+
+### Bug Fixes
+
+* **header:** Fix tool tip & Add search icon ([d100aa2](https://github.com/shebll/weathterio/commit/d100aa2211d45db69b52c794329be5e4e41b103b))
+
 ### 0.0.1 (2024-06-28)
 
 
