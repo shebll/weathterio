@@ -2,11 +2,17 @@ import { useEffect, useState } from "react";
 import { useCity } from "../../context/CityContext";
 import { fetchWeather } from "../../lib/api/weather";
 import { WeatherType } from "../../type/Weather";
+import LocationAndDate from "./components/LocationAndDate";
+import WeatherIcon from "./components/WeatherIcon";
+import WeatherOverView from "./components/WeatherOverView";
+import WeatherInfo from "./components/WeatherInfo";
 
 export default function Weather() {
   const { selectedCity } = useCity();
   const [data, setData] = useState<WeatherType | null>(null);
+  const [tempType, setTempType] = useState<"c" | "f">("c");
   const [currentTime, setCurrentTime] = useState<string>("");
+  const [currentDate, setCurrentDate] = useState<string>("");
 
   async function fetchData(selectedCity: City) {
     const data = await fetchWeather(
@@ -28,7 +34,16 @@ export default function Weather() {
         const localOffset = date.getTimezoneOffset() * 60000;
         const utc = localTime + localOffset;
         const cityTime = utc + data.timezone * 1000;
-        setCurrentTime(new Date(cityTime).toLocaleTimeString());
+        const cityDate = new Date(cityTime);
+
+        setCurrentTime(cityDate.toLocaleTimeString());
+        setCurrentDate(
+          cityDate.toLocaleDateString("en-US", {
+            weekday: "long",
+            month: "short",
+            day: "numeric",
+          })
+        );
       };
 
       updateCurrentTime();
@@ -45,26 +60,22 @@ export default function Weather() {
     return <div>Loading...</div>;
   }
 
-  const avgTemp = (
-    (data.main.temp_min + data.main.temp_max) / 2 -
-    273.15
-  ).toFixed(2);
-
   return (
-    <div>
-      <h1>
-        Weather in {data.name}, {data.sys.country}
-      </h1>
-      <p>Current Time: {currentTime}</p>
-      <p>Temperature: {(data.main.temp - 273.15).toFixed(2)} °C</p>
-      <p>Feels like: {(data.main.feels_like - 273.15).toFixed(2)} °C</p>
-      <p>Average Temperature: {avgTemp} °C</p>
-      <p>
-        Weather: {data.weather[0].main} - {data.weather[0].description}
-      </p>
-      <p>Humidity: {data.main.humidity}%</p>
-      <p>Wind Speed: {data.wind.speed} m/s</p>
-      <p>Cloudiness: {data.clouds.all}%</p>
+    <div className="flex flex-col items-center w-full gap-10">
+      <LocationAndDate
+        currentDate={currentDate}
+        currentTime={currentTime}
+        cityName={data.name}
+        country={data.sys.country}
+      />
+      <WeatherIcon data={data} />
+      <WeatherOverView
+        tempType={tempType}
+        setTempType={setTempType}
+        data={data}
+      />
+
+      <WeatherInfo tempType={tempType} data={data} />
     </div>
   );
 }
