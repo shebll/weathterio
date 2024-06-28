@@ -87,30 +87,38 @@ export default function SearchInput() {
   };
   return (
     <div className="relative flex items-center gap-1">
-      <input
-        ref={searchInput}
-        id="cityName"
-        name="cityName"
-        value={input}
-        onChange={handleChange}
-        onKeyDown={handleKeyDown}
-        type="text"
-        className="border rounded-md bg-gray-100 outline-[0.5px] outline-gray-200 py-2 px-4"
-      />
-      <div className="relative inline-block">
-        <button onClick={getCurrentLocation} className="relative z-10 group">
+      <div className="rounded-md bg-gray-100 outline-[0.5px] outline-gray-200 py-2 px-4 flex gap-2 items-center">
+        <img
+          src="/search-light.png"
+          alt="search light image"
+          width={20}
+          height={20}
+        />
+        <input
+          ref={searchInput}
+          id="cityName"
+          name="cityName"
+          value={input}
+          onChange={handleChange}
+          onKeyDown={handleKeyDown}
+          type="text"
+          className="bg-transparent outline-none"
+        />
+      </div>
+      <div className="relative inline-block group">
+        <button onClick={getCurrentLocation} className="relative z-10">
           <img
             src="/location-light.png"
             alt="location png"
-            width={30}
-            height={30}
-            className="rounded-full bg-gray-200 p-2"
+            width={35}
+            height={35}
+            className="p-2 bg-gray-200 rounded-full"
           />
         </button>
-        <div className="absolute right-[-200%] bottom-full mb-2 block bg-black/85 text-white text-sm rounded-md px-2 py-1 w-max">
+        <div className="absolute right-[-200%] bottom-[140%]  transition-all ease-in-out duration-300 group-hover:bottom-full mb-2 opacity-0 group-hover:opacity-100 bg-black/85 text-white text-sm rounded-md px-2 py-1 w-max">
           Use Current Location
           <svg
-            className="absolute text-gray-900 h-2 w-full left-0 top-full"
+            className="absolute left-0 w-full h-2 text-gray-900 top-full"
             x="0px"
             y="0px"
             viewBox="0 0 255 255"
@@ -129,7 +137,7 @@ export default function SearchInput() {
           ) : (
             cities.map((city, index) => (
               <span
-                className="text-gray-500 cursor-pointer hover:bg-gray-200 py-2 px-4 transition-all "
+                className="px-4 py-2 text-gray-500 transition-all cursor-pointer hover:bg-gray-200 "
                 key={index}
                 onClick={() => handleCityClick(city)}
               >

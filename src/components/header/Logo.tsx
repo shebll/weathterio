@@ -1,7 +1,7 @@
 export default function Logo() {
   return (
     <a href="/">
-      <div className="flex gap-1 items-center group">
+      <div className="flex items-center gap-1 group">
         <img
           src="/favicon.png"
           alt="Weather.io favicon"
