@@ -1,10 +1,9 @@
 import { useState } from "react";
 import { useCity } from "../../context/CityContext";
 
-import HourlyForecast from "./components/HourlyForecast";
-
 import { LoadingSkelton } from "./components/LoadingSkelton";
 import CurrentWeatherWidget from "./components/CurrentWeatherWidget";
+import Forecast from "./components/Forecast/Forecast";
 
 export default function Weather() {
   const { selectedCity } = useCity();
@@ -29,13 +28,8 @@ export default function Weather() {
         setTempType={setTempType}
         tempType={tempType}
       />
-
-      {/* Forecast for every hours in day component */}
-      <HourlyForecast
-        tempType={tempType}
-        selectedCity={selectedCity}
-        // timezone={data.timezone}
-      />
+      {/* Forecast Weather component */}
+      <Forecast tempType={tempType} selectedCity={selectedCity} />
     </div>
   );
 }
