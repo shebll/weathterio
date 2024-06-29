@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
 import { useCity } from "../../context/CityContext";
-import { fetchForecast, fetchWeather } from "../../lib/api/weather";
-import { ForecastType, WeatherType } from "../../type/Weather";
+
+import { fetchWeather } from "../../lib/api/weather";
+import type { WeatherType } from "../../type/Weather";
+
 import LocationAndDate from "./components/LocationAndDate";
 import WeatherIcon from "./components/WeatherIcon";
 import WeatherOverView from "./components/WeatherOverView";
 import WeatherInfo from "./components/WeatherInfo";
 import HourlyForecast from "./components/HourlyForecast";
 
+import { LoadingSkelton } from "./components/LoadingSkelton";
+
 export default function Weather() {
   const { selectedCity } = useCity();
-  const [loading, setLoading] = useState(false);
+
   const [data, setData] = useState<WeatherType | null>(null);
-  const [forecast, setForecast] = useState<ForecastType | null>(null);
+  const [loading, setLoading] = useState(false);
+
   const [tempType, setTempType] = useState<"c" | "f">("c");
-  const [currentTime, setCurrentTime] = useState<string>("");
-  const [currentDate, setCurrentDate] = useState<string>("");
 
   async function fetchData(selectedCity: City) {
     setLoading(true);
@@ -23,44 +26,13 @@ export default function Weather() {
       selectedCity.latitude.toString(),
       selectedCity.longitude.toString()
     );
-    const forecastData = await fetchForecast(
-      selectedCity.latitude.toString(),
-      selectedCity.longitude.toString()
-    );
     setData(weatherData);
-    setForecast(forecastData);
     setLoading(false);
   }
 
   useEffect(() => {
     if (selectedCity) fetchData(selectedCity);
   }, [selectedCity]);
-
-  useEffect(() => {
-    if (data) {
-      const updateCurrentTime = () => {
-        const date = new Date();
-        const localTime = date.getTime();
-        const localOffset = date.getTimezoneOffset() * 60000;
-        const utc = localTime + localOffset;
-        const cityTime = utc + data.timezone * 1000;
-        const cityDate = new Date(cityTime);
-
-        setCurrentTime(cityDate.toLocaleTimeString());
-        setCurrentDate(
-          cityDate.toLocaleDateString("en-US", {
-            weekday: "long",
-            month: "short",
-            day: "numeric",
-          })
-        );
-      };
-
-      updateCurrentTime();
-      const intervalId = setInterval(updateCurrentTime, 1000);
-      return () => clearInterval(intervalId);
-    }
-  }, [data]);
 
   if (!selectedCity) {
     return (
@@ -72,71 +44,38 @@ export default function Weather() {
       </>
     );
   }
-  if (!data || !forecast)
-    return <div className="flex flex-col items-center w-full gap-10"></div>;
+  if (!data) return null;
 
-  if (loading) {
-    return <LoadingSkelton />;
-  }
+  if (loading) return <LoadingSkelton />;
 
   if (data)
     return (
       <div className="flex flex-col items-center w-full gap-10">
+        {/* location date component */}
         <LocationAndDate
-          currentDate={currentDate}
-          currentTime={currentTime}
+          Timezone={data.timezone}
           cityName={data.name}
           country={data.sys.country}
         />
-        <WeatherIcon data={data} />
+        {/* Weather Icon component */}
+        <WeatherIcon Weather={data.weather[0].main} Timezone={data.timezone} />
+
+        {/* Weather OverView component */}
         <WeatherOverView
           tempType={tempType}
           setTempType={setTempType}
           data={data}
         />
+
+        {/* Weather Info for day component */}
         <WeatherInfo tempType={tempType} data={data} />
+
+        {/* Forecast for every hours in day component */}
         <HourlyForecast
-          currentDate={currentDate}
-          forecast={forecast}
           tempType={tempType}
+          selectedCity={selectedCity}
+          timezone={data.timezone}
         />
       </div>
     );
 }
-
-const LoadingSkelton = () => {
-  return (
-    <div className="flex flex-col items-center w-full gap-20">
-      <div className="flex flex-col items-center w-full gap-2">
-        <h1 className="w-32 h-6 bg-gray-200 rounded-md animate-pulse"></h1>
-        <div className="flex flex-col items-center gap-1 text-center">
-          <p className="h-4 bg-gray-200 rounded-md w-36 animate-pulse"></p>
-          <p className="h-4 bg-gray-200 rounded-md w-28 animate-pulse"></p>
-        </div>
-      </div>
-      <div className="bg-gray-200 rounded-full w-[12rem] h-48 animate-pulse"></div>
-      <div className="flex flex-col items-center w-full gap-2">
-        <p className="h-4 bg-gray-200 rounded-md w-36 animate-pulse"></p>
-        <h1 className="h-6 bg-gray-200 rounded-md w-44 animate-pulse"></h1>
-        <div className="flex flex-row items-center gap-1 text-center">
-          <p className="w-20 h-4 bg-gray-200 rounded-md animate-pulse"></p>
-          <p className="w-16 h-4 bg-gray-200 rounded-md animate-pulse"></p>
-        </div>
-      </div>
-      <div className="bg-gray-200 rounded-md w-[100%] h-20 flex flex-row items-center justify-between animate-pulse px-4">
-        <div className="flex items-center h-full gap-2">
-          <p className="w-10 h-[60%] bg-gray-300 rounded-full animate-pulse"></p>
-          <p className="w-16 h-4 bg-gray-300 rounded-md animate-pulse"></p>
-        </div>
-        <div className="flex items-center h-full gap-2">
-          <p className="w-10 h-[60%] bg-gray-300 rounded-full animate-pulse"></p>
-          <p className="w-12 h-4 bg-gray-300 rounded-md animate-pulse"></p>
-        </div>
-        <div className="flex items-center h-full gap-2">
-          <p className="w-10 h-[60%] bg-gray-300 rounded-full animate-pulse"></p>
-          <p className="h-4 bg-gray-300 rounded-md w-14 animate-pulse"></p>
-        </div>
-      </div>
-    </div>
-  );
-};

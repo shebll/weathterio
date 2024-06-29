@@ -1,14 +1,15 @@
+import { CurrentDate } from "./CurrentDate";
+import { CurrentTime } from "./CurrentTime";
+
 type props = {
-  currentTime: string;
-  currentDate: string;
   cityName: string;
   country: string;
+  Timezone: number;
 };
 export default function LocationAndDate({
-  currentTime,
-  currentDate,
   cityName,
   country,
+  Timezone,
 }: props) {
   return (
     <div className="flex flex-col items-center w-full gap-2">
@@ -16,11 +17,8 @@ export default function LocationAndDate({
         {cityName}, {country}
       </h1>
       <div className="text-center ">
-        <p className="text-gray-500">
-          <strong>{currentDate.split(" ")[0]}</strong>
-          {currentDate.split(",")[1]}
-        </p>
-        <p className="text-gray-500">{currentTime}</p>
+        <CurrentDate Timezone={Timezone} />
+        <CurrentTime Timezone={Timezone} />
       </div>
     </div>
   );

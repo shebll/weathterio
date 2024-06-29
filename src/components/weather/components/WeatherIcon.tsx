@@ -1,10 +1,15 @@
 import { weatherIcons } from "../../../data/weatherIcons";
-import { WeatherType } from "../../../type/Weather";
 
-export default function WeatherIcon({ data }: { data: WeatherType }) {
-  const currentHour = new Date().getUTCHours() + data.timezone / 3600;
+export default function WeatherIcon({
+  Timezone,
+  Weather,
+}: {
+  Timezone: number;
+  Weather: string;
+}) {
+  const currentHour = new Date().getUTCHours() + Timezone / 3600;
   const isDaytime = currentHour >= 6 && currentHour < 18;
-  const weatherCondition = data.weather[0].main;
+  const weatherCondition = Weather;
   const weatherImage = weatherIcons[weatherCondition]
     ? isDaytime
       ? weatherIcons[weatherCondition].day
