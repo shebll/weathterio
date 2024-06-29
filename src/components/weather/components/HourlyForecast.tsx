@@ -5,29 +5,48 @@ import { getTempFromType } from "./getTempFromType";
 
 import { weatherIcons } from "../../../data/weatherIcons";
 import { ForecastType } from "../../../type/Weather";
-import { CurrentDate } from "./CurrentDate";
+// import { CurrentDate } from "./CurrentDate";
+import axios from "axios";
 
 type props = {
   tempType: "c" | "f";
   selectedCity: City;
-  timezone: number;
+  // timezone: number;
 };
 export default function HourlyForecast({
   tempType,
   selectedCity,
-  timezone,
-}: props) {
+}: // timezone,
+props) {
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [forecast, setForecast] = useState<ForecastType | null>(null);
 
   async function fetchData(selectedCity: City) {
     setLoading(true);
-    const forecastData = await fetchForecast(
-      selectedCity.latitude.toString(),
-      selectedCity.longitude.toString()
-    );
-    setForecast(forecastData);
-    setLoading(false);
+    setError(null);
+    try {
+      const forecastData = await fetchForecast(
+        selectedCity.latitude.toString(),
+        selectedCity.longitude.toString()
+      );
+      setForecast(forecastData);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        // if api provider given error
+        if (error.response) {
+          setError(`Error fetching data: ${error.response.data.message}`);
+        } else {
+          setError(`Error fetching data: ${error.message}`);
+        }
+      } else if (error instanceof Error) {
+        setError(`${error.message}`);
+      } else {
+        setError("Something went wrong try again");
+      }
+    } finally {
+      setLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -35,6 +54,19 @@ export default function HourlyForecast({
   }, [selectedCity]);
 
   if (loading) return <ForecastLoading />;
+
+  if (error)
+    return (
+      <div className="flex flex-col items-center w-full gap-2 p-4 text-gray-100 bg-red-400 rounded-md">
+        <p>{error}</p>
+        <button
+          className="w-full p-2 bg-red-500 rounded-md"
+          onClick={() => fetchData(selectedCity)}
+        >
+          Reload
+        </button>
+      </div>
+    );
   if (!forecast) return null;
 
   const hourlyForecast = forecast.list.slice(0, 8); // First 8 entries (24 hours)
@@ -42,7 +74,8 @@ export default function HourlyForecast({
     <div className="flex flex-col items-center w-full bg-gray-200 rounded-md shadow-md">
       <div className="p-4 text-xl">
         <div className="text-center ">
-          <CurrentDate Timezone={timezone} />
+          Today
+          {/* <CurrentDate Timezone={timezone} /> */}
         </div>
       </div>
       <div className="flex flex-row items-center w-full gap-8 px-4 overflow-y-auto">
