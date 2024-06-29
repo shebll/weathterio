@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/shebll/weathterio/compare/v0.0.3...v0.0.4) (2024-06-29)
+
+
+### Features
+
+* **app:** Cash the latest city ([ba287b2](https://github.com/shebll/weathterio/commit/ba287b2a246889e85cbf605b37c7ea51b5243458))
+* **weather:** Handle error ([9a37551](https://github.com/shebll/weathterio/commit/9a37551c67b572112ab906265e7f1341f70f0705))
+
 ### [0.0.3](https://github.com/shebll/weathterio/compare/v0.0.2...v0.0.3) (2024-06-29)
 
 
