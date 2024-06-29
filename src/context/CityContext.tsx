@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 
 interface CityContextType {
   selectedCity: City | null;
@@ -9,6 +15,15 @@ const CityContext = createContext<CityContextType | undefined>(undefined);
 
 export const CityProvider = ({ children }: { children: ReactNode }) => {
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
+
+  useEffect(() => {
+    if (!selectedCity) {
+      const storedCity = localStorage.getItem("storedCity");
+      if (storedCity) setSelectedCity(JSON.parse(storedCity) as City);
+    } else {
+      localStorage.setItem("storedCity", JSON.stringify(selectedCity));
+    }
+  }, [selectedCity]);
 
   return (
     <CityContext.Provider value={{ selectedCity, setSelectedCity }}>
