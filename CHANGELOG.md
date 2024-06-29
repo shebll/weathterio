@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.3](https://github.com/shebll/weathterio/compare/v0.0.2...v0.0.3) (2024-06-29)
+
+
+### Features
+
+* **forecast:** Add forecast section for day ([94731c9](https://github.com/shebll/weathterio/commit/94731c960df5dbe39750ed163a3dd9f4474274e9))
+
 ### [0.0.2](https://github.com/shebll/weathterio/compare/v0.0.1...v0.0.2) (2024-06-28)
 
 
