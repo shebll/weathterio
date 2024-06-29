@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { fetchCity, fetchCityByCoordinates } from "../../lib/api/cities";
 import { useCity } from "../../context/CityContext";
+import axios from "axios";
 
 export default function SearchInput() {
   const searchInput = useRef<HTMLInputElement | null>(null);
   const [input, setInput] = useState<string>("");
-  const [errors, setErrors] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string | null>(null);
   const [cities, setCities] = useState<City[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showPopup, setShowPopup] = useState<boolean>(false);
@@ -26,13 +27,26 @@ export default function SearchInput() {
 
   const fetchCities = async (value: string) => {
     setLoading(true);
-    setErrors([]);
-    const data = await fetchCity(value);
-    setLoading(false);
-    if (data.length === 0) {
-      setErrors((prev) => [...prev, "City Not Found"]);
-    } else {
+    setErrors(null);
+    setCities([]);
+    try {
+      const data = await fetchCity(value);
       setCities(data);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        // if api provider given error
+        if (error.response) {
+          setErrors(`Error fetching data: ${error.response.data.message}`);
+        } else {
+          setErrors(`Error fetching data: ${error.message}`);
+        }
+      } else if (error instanceof Error) {
+        setErrors(`${error.message}`);
+      } else {
+        setErrors("Something went wrong try again");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -126,24 +140,21 @@ export default function SearchInput() {
               <p className="p-4">Loading ... </p>
             </>
           ) : (
-            cities.map((city, index) => (
-              <span
-                className="px-4 py-2 text-gray-500 transition-all cursor-pointer hover:bg-gray-200 "
-                key={index}
-                onClick={() => handleCityClick(city)}
-              >
-                {city.name}
-              </span>
-            ))
+            <>
+              {errors && <p className="px-4 py-2 text-red-500">{errors}</p>}
+              {cities.map((city, index) => (
+                <span
+                  className="px-4 py-2 text-gray-500 transition-all cursor-pointer hover:bg-gray-200 "
+                  key={index}
+                  onClick={() => handleCityClick(city)}
+                >
+                  {city.name}
+                </span>
+              ))}
+            </>
           )}
         </div>
       )}
-      {errors.length > 0 &&
-        errors.map((error, index) => (
-          <p className="text-red-500" key={index}>
-            {error}
-          </p>
-        ))}
     </div>
   );
 }
