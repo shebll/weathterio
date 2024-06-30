@@ -10,7 +10,7 @@ type props = {
 export default function HourlyForecast({ forecast, tempType }: props) {
   const hourlyForecast = forecast.list.slice(0, 8); // First 8 entries (24 hours)
   return (
-    <div className="flex flex-col items-center w-full bg-gray-200 rounded-md shadow-md">
+    <div className="flex flex-col items-center w-full bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 rounded-md shadow-md">
       <div className="p-4 text-xl">
         <div className="text-center ">
           Today
@@ -21,7 +21,7 @@ export default function HourlyForecast({ forecast, tempType }: props) {
         {hourlyForecast.map((hour, idx) => (
           <div
             key={idx}
-            className="flex flex-col items-center p-2 transition-all rounded-md w-max shrink-0 hover:bg-gray-300"
+            className="flex flex-col items-center p-2 transition-all rounded-md w-max shrink-0 hover:bg-gray-200 dark:hover:bg-[#313131]"
           >
             <p>{getTempFromType(hour.main.temp, tempType)}°</p>
             <img

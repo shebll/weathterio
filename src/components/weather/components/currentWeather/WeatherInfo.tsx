@@ -1,5 +1,5 @@
-import { WeatherType } from "../../../type/Weather";
-import { getTempFromType } from "./getTempFromType";
+import { WeatherType } from "../../../../type/Weather";
+import { getTempFromType } from "../getTempFromType";
 
 type props = {
   data: WeatherType;
@@ -7,7 +7,7 @@ type props = {
 };
 export default function WeatherInfo({ data, tempType }: props) {
   return (
-    <div className="flex flex-row items-center w-full gap-20 p-4 overflow-y-auto bg-gray-200 rounded-md shadow-md">
+    <div className="flex flex-row items-center w-full gap-20 p-4 overflow-y-auto bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 rounded-md shadow-md">
       <div className="flex items-center gap-3 text-xl font-medium w-max shrink-0">
         <img
           src="/temperature.png"

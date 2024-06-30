@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useCity } from "../../context/CityContext";
 
-import { LoadingSkelton } from "./components/LoadingSkelton";
+import { LoadingSkelton } from "./components/currentWeather/LoadingSkelton";
 import CurrentWeatherWidget from "./components/CurrentWeatherWidget";
 import Forecast from "./components/Forecast/Forecast";
 

@@ -1,5 +1,5 @@
-import { CurrentDate } from "./CurrentDate";
-import { CurrentTime } from "./CurrentTime";
+import { CurrentDate } from "../CurrentDate";
+import { CurrentTime } from "../CurrentTime";
 
 type props = {
   cityName: string;
@@ -16,7 +16,7 @@ export default function LocationAndDate({
       <h1 className="text-2xl font-medium">
         {cityName}, {country}
       </h1>
-      <div className="text-center ">
+      <div className="text-center">
         <CurrentDate Timezone={Timezone} />
         <CurrentTime Timezone={Timezone} />
       </div>

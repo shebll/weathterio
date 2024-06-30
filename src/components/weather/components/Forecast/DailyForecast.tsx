@@ -11,7 +11,7 @@ const DailyForecast = ({ forecast, tempType }: props) => {
   const dailyForecast = forecast.list.filter((_, idx) => idx % 8 === 0); // Approx. every 24 hours
 
   return (
-    <div className="flex flex-col items-center w-full bg-gray-200 rounded-md shadow-md h-60">
+    <div className="flex flex-col items-center w-full bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 rounded-md shadow-md h-60">
       <div className="p-4 text-xl">
         <div className="text-center">Weekly Forecast</div>
       </div>
@@ -19,7 +19,7 @@ const DailyForecast = ({ forecast, tempType }: props) => {
         {dailyForecast.map((day, idx) => (
           <div
             key={idx}
-            className="flex flex-row items-center justify-around w-full p-2 transition-all rounded-md shrink-0 hover:bg-gray-300"
+            className="flex flex-row items-center justify-around w-full p-2 transition-all rounded-md shrink-0 hover:bg-gray-200 dark:hover:bg-[#313131]"
           >
             <strong>
               {new Date(day.dt * 1000).toLocaleDateString("en-US", {

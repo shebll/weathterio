@@ -1,4 +1,3 @@
-// Define the TypeScript type for the city data response
 interface City {
   country: string;
   is_capital: boolean;

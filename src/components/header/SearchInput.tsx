@@ -101,12 +101,20 @@ export default function SearchInput() {
   };
   return (
     <div className="relative flex items-center gap-1 ">
-      <div className="rounded-md bg-gray-100 outline-[0.5px] outline-gray-200 py-2 px-4 flex gap-2 items-center">
+      <div className="rounded-md bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 outline-[0.5px] outline-gray-200  py-2 px-4 flex gap-2 items-center">
         <img
           src="/search-light.png"
           alt="search light image"
           width={20}
           height={20}
+          className="block dark:hidden"
+        />
+        <img
+          src="/search-dark.png"
+          alt="search light image"
+          width={20}
+          height={20}
+          className="hidden dark:block"
         />
         <input
           ref={searchInput}
@@ -124,9 +132,16 @@ export default function SearchInput() {
           <img
             src="/location-light.png"
             alt="location png"
-            width={35}
-            height={35}
-            className="p-2 bg-gray-200 rounded-full"
+            width={36}
+            height={36}
+            className="block dark:hidden p-2 bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 rounded-full"
+          />
+          <img
+            src="/location-dark.png"
+            alt="location png"
+            width={36}
+            height={36}
+            className="p-2 bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 rounded-full hidden dark:block"
           />
         </button>
         <div className="absolute right-[-30%] bottom-[140%]  transition-all ease-in-out duration-300 group-hover:bottom-full mb-2 opacity-0 group-hover:opacity-100 bg-black/85 text-white text-sm rounded-md px-2 py-1 w-max">
@@ -134,7 +149,7 @@ export default function SearchInput() {
         </div>
       </div>
       {showPopup && (
-        <div className="absolute max-h-64 overflow-auto rounded-md top-[104%] left-0 w-full bg-gray-100 flex flex-col gap-2">
+        <div className="absolute max-h-64 overflow-auto rounded-md top-[104%] left-0 w-full bg-gray-100 dark:bg-[#292929] text-[#292929] dark:text-gray-50 flex flex-col gap-2">
           {loading ? (
             <>
               <p className="p-4">Loading ... </p>
@@ -144,7 +159,7 @@ export default function SearchInput() {
               {errors && <p className="px-4 py-2 text-red-500">{errors}</p>}
               {cities.map((city, index) => (
                 <span
-                  className="px-4 py-2 text-gray-500 transition-all cursor-pointer hover:bg-gray-200 "
+                  className="px-4 py-2 text-gray-400 transition-all cursor-pointer hover:bg-gray-200 dark:hover:bg-[#3d3d3d]"
                   key={index}
                   onClick={() => handleCityClick(city)}
                 >

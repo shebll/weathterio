@@ -4,10 +4,9 @@
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-white dark:bg-slate-900;
+  @apply bg-white dark:bg-[#242424];
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply transition-all;
-  background-color: #e6e6e6;
+  @apply transition-all bg-gray-200 dark:bg-[#2e2e2e];
 }

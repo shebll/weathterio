@@ -3,13 +3,21 @@ export default function Logo() {
     <a href="/">
       <div className="flex items-center gap-1 group">
         <img
-          src="/favicon.png"
+          src="/favicon-light.png"
           alt="Weather.io favicon"
-          width={20}
-          height={20}
+          width={30}
+          height={30}
+          className="block dark:hidden"
         />
-        <h1 className="text-2xl font-semibold transition-all group-hover:text-[#1b1b1b]">
-          Weather.Io
+        <img
+          src="/favicon-dark.png"
+          alt="Weather.io favicon"
+          width={30}
+          height={30}
+          className="hidden dark:block"
+        />
+        <h1 className="text-2xl font-semibold transition-all text-[#474747] dark:text-gray-50">
+          WeaZerIo
         </h1>
       </div>
     </a>

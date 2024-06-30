@@ -6,7 +6,7 @@ export const CurrentDate = ({ Timezone }: { Timezone: number }) => {
     if (Timezone) setCurrentDate(updateCurrentDate(Timezone));
   }, [Timezone]);
   return (
-    <p className="text-gray-500">
+    <p className="text-gray-500 dark:text-gray-300">
       <strong>{currentDate.split(" ")[0]}</strong>
       {currentDate.split(",")[1]}
     </p>

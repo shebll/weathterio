@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import LocationAndDate from "./LocationAndDate";
-import WeatherIcon from "./WeatherIcon";
-import WeatherOverView from "./WeatherOverView";
+import LocationAndDate from "./currentWeather/LocationAndDate";
+import WeatherIcon from "./currentWeather/WeatherIcon";
+import WeatherOverView from "./currentWeather/WeatherOverView";
 import { WeatherType } from "../../../type/Weather";
 import { fetchWeather } from "../../../lib/api/weather";
-import { LoadingSkelton } from "./LoadingSkelton";
-import WeatherInfo from "./WeatherInfo";
+import { LoadingSkelton } from "./currentWeather/LoadingSkelton";
+import WeatherInfo from "./currentWeather/WeatherInfo";
 import axios from "axios";
 
 type props = {

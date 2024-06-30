@@ -1,4 +1,4 @@
-import { weatherIcons } from "../../../data/weatherIcons";
+import { weatherIcons } from "../../../../data/weatherIcons";
 
 export default function WeatherIcon({
   Timezone,
