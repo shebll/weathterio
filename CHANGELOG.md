@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/shebll/weathterio/compare/v0.0.4...v0.0.5) (2024-06-30)
+
+
+### Features
+
+* **app:** improve the SEO ([00862b2](https://github.com/shebll/weathterio/commit/00862b2961d52dd1b999ef526bcf0174282e2e8f))
+* **forecast:** add daily forecast section ([e7cccfa](https://github.com/shebll/weathterio/commit/e7cccfa195c87fbf5650634ff5bf7b4bc413d891))
+* **header:** Handle city input ([74ed895](https://github.com/shebll/weathterio/commit/74ed895e10d07b3068a81af40ebfb7e730d45349))
+
 ### [0.0.4](https://github.com/shebll/weathterio/compare/v0.0.3...v0.0.4) (2024-06-29)
 
 
