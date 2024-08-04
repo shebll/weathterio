@@ -30,9 +30,26 @@ export default function CurrentWeatherWidget({
         selectedCity.latitude.toString(),
         selectedCity.longitude.toString()
       );
+      // Save data to local storage
+      localStorage.setItem(
+        "currentWeatherData",
+        JSON.stringify({
+          timestamp: Date.now(),
+          data: weatherData,
+        })
+      );
       setData(weatherData);
     } catch (error: unknown) {
-      if (axios.isAxiosError(error)) {
+      if (!navigator.onLine) {
+        const cachedCurrentWeather = localStorage.getItem("currentWeatherData");
+        if (cachedCurrentWeather) {
+          const { data } = JSON.parse(cachedCurrentWeather);
+          setData(data);
+          setError("You are offline. Showing the latest available data.");
+        } else {
+          setError("You are offline and no data is available.");
+        }
+      } else if (axios.isAxiosError(error)) {
         // if api provider given error
         if (error.response) {
           setError(`Error fetching data: ${error.response.data.message}`);
@@ -50,7 +67,25 @@ export default function CurrentWeatherWidget({
   }
 
   useEffect(() => {
-    if (selectedCity) fetchData(selectedCity);
+    if (selectedCity) {
+      const cachedCurrentWeather = localStorage.getItem("currentWeatherData");
+      if (cachedCurrentWeather) {
+        const { timestamp, data } = JSON.parse(cachedCurrentWeather);
+        // if user select new city
+        if (selectedCity.name !== data.name) fetchData(selectedCity);
+        const now = Date.now();
+        const age = now - timestamp;
+        const maxAge = 5 * 60 * 1000; // 3 min
+
+        if (age < maxAge) {
+          setData(data);
+        } else {
+          fetchData(selectedCity);
+        }
+      } else {
+        fetchData(selectedCity);
+      }
+    }
   }, [selectedCity]);
 
   if (loading) return <LoadingSkelton />;

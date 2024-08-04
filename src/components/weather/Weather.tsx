@@ -4,6 +4,10 @@ import { useCity } from "../../context/CityContext";
 import { LoadingSkelton } from "./components/currentWeather/LoadingSkelton";
 import CurrentWeatherWidget from "./components/CurrentWeatherWidget";
 import Forecast from "./components/Forecast/Forecast";
+import {
+  DailyForecastLoading,
+  HourlyForecastLoading,
+} from "./components/Forecast/ForecastLoading";
 
 export default function Weather() {
   const { selectedCity } = useCity();
@@ -12,10 +16,12 @@ export default function Weather() {
   if (!selectedCity) {
     return (
       <>
-        <h1 className="text-xl font-semibold text-gray-600">
+        <h1 className="text-xl font-semibold text-gray-600 dark:text-gray-100">
           Select your city or use current location
         </h1>
         <LoadingSkelton />
+        <HourlyForecastLoading />
+        <DailyForecastLoading />
       </>
     );
   }
